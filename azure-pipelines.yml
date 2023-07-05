@@ -1,0 +1,30 @@
+trigger:
+# which branch triggers the tests
+-master
+
+pool:
+# which os virtual machine will have
+  vmImage: windows-latest
+
+
+strategy:
+  matrix:
+  # job name
+  TradingApp:
+    python.version: '3.11'
+
+steps:
+# use above Python version in Virtual Machine
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+  displayName: 'Use Python $(python.version)'
+
+# Run the following commands in terminal
+- script: |
+    pip install -r requirements.txt
+  displayName: 'Install Python Libraries'
+
+- script: |
+    pytest -v
+  displayName: 'Start Test Execution'
