@@ -1,0 +1,9 @@
+*.log
+*.png
+*.xml
+*.html
+
+__pycache__/
+.pytest_cache/
+.vscode/
+assets/
