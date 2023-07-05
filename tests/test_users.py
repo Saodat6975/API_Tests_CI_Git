@@ -58,3 +58,24 @@ class TestUsers:
         assert data['job'] == payload['job']        
         assert 'id' in data.keys()
         assert 'createdAt' in data.keys()
+    
+
+    def test_each_user_data(self):
+        current_page = 1
+        total_page = 1
+
+        while current_page <= total_page:
+            url = f'{BASE_URL}/users'
+            params = {'page': current_page}
+            response = requests.get(self.url, params=params)
+            dt = response.json()
+
+            for user in dt['data']:
+                logger.info(f"page: {current_page} - {user['first_name']} - {user['last_name']}")
+                assert 'id' in user.keys()
+                assert 'first_name' in user.keys()
+                assert 'last_name' in user.keys()
+                assert 'avatar' in user.keys()
+            total_page = dt['total']
+            current_page = current_page + 1
+
